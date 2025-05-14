@@ -1,10 +1,10 @@
-import bcrypt from "bcrypt";
+import argon2 from "argon2"
 import userModel from "../models/user.model.js";
 
 export const updateUser = async (userId, updateData) =>{
     if (updateData.password){
         try {
-            updateData.password = await bcrypt.hashSync(updateData.password, 10);
+            updateData.password = await argon2.hash(updateData.password);
         } catch (err){
             throw err;
         }

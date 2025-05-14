@@ -4,7 +4,7 @@ import { Schema } from "mongoose";
 const postSchema = new Schema({
         userId:{
             type:String,
-            required: trusted,
+            required: true,
         },
         desc:{
             type: String,

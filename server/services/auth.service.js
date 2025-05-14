@@ -1,10 +1,9 @@
 import userModel from "../models/user.model.js";
-import bcrypt from "bcrypt";
-
+import argon2 from "argon2";
 export const registerUser = async (body) => {
     
-        const hashPassword = bcrypt.hashSync(body.password, 10);
-        const newUser = new userModel({
+            const hashPassword = await argon2.hash(body.password);        
+            const newUser = new userModel({
             username: body.username,
             email: body.email,
             password: hashPassword,
@@ -23,7 +22,7 @@ export const loginUser = async (body) => {
     const user = await userModel.findOne({email:body.email});
     !user && res.status(404).json("User not found");
 
-    const passwordCheck = await bcrypt.compare(body.password, user.password);
+    const passwordCheck = await argon2.verify(user.password, body.password);
     !passwordCheck && res.status(400).json("Wrong password");
 
     return user;
