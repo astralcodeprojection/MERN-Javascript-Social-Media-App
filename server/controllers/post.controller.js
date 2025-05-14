@@ -1,4 +1,4 @@
-import { createPost, getTimelinePosts, likeAndDislike } from "../services/post.service";
+import { createPost, getTimelinePosts, likeAndDislike } from "../services/post.service.js";
 
 export const createPostController = async (req, res)=>{
     try {

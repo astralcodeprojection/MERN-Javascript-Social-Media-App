@@ -37,7 +37,7 @@ export const deletePost = async (params, body)=> {
     try {
         const deletedPost = await postModel.findById(params.id);
         if (deletedPost.userId === body.userId) {
-            await postModel.deleteOne();
+            await postModel.deleteOne({_id: params.id});
 
             return deletedPost;
 
@@ -58,7 +58,7 @@ export const likeAndDislike = async (params, body)=> {
         if (!post.likes.includes(body.userId)) {
             await post.updateOne({$push: {likes: body.userId}});
         } else {
-            await post.updateOne({$pul: {likes: body.userId}})
+            await post.updateOne({$pull: {likes: body.userId}})
         }
 
         return post;
@@ -91,7 +91,7 @@ export const getTimelinePosts = async (body)=> {
         );
 
         
-        return userPosts.concat({...timelinePosts});
+        return userPosts.concat(...timelinePosts);
 
     } catch (error) {
         throw error;
