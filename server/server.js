@@ -17,7 +17,13 @@ app.use(express.json())
 
 app.use(routes);
 
-app.listen(5050, ()=> {
-    console.log('Server is Running');
-    dbConnect()
+app.get("/", (req, res) => {
+  res.send("API is running");
+});
+
+const PORT = process.env.PORT || 5050;
+
+app.listen(PORT, () => {
+  console.log(`Server is running on port ${PORT}`);
+  dbConnect();
 });
